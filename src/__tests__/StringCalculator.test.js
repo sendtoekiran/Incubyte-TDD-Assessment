@@ -34,3 +34,13 @@ test('handles invalid input gracefully', () => {
     const resultElement = getByText(/Sum: 4/i);
     expect(resultElement).toBeInTheDocument();
 });
+
+test('handles invalid with \n input gracefully', () => {
+    const { getByPlaceholderText, getByText } = render(<StringCalculator />);
+    const inputElement = getByPlaceholderText(/Enter numbers separated by commas/i);
+    const buttonElement = getByText(/Calculate/i);
+    fireEvent.change(inputElement, { target: { value: '1,\n2,3' } });
+    fireEvent.click(buttonElement);
+    const resultElement = getByText(/Sum: 6/i);
+    expect(resultElement).toBeInTheDocument();
+});

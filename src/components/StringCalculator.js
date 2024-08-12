@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './StringCalculator.css';
 
 function StringCalculator() {
@@ -8,12 +8,12 @@ function StringCalculator() {
     const handleInputChange = (e) => {
         setInput(e.target.value);
     };
-
-    const calculateSum = () => {
-        const numbers = input.split(',').map(Number).filter(n => !isNaN(n));
+    const add = useCallback((value) => {
+        const inputValue = value.replace(new RegExp("\\\\n", "g"), ",");
+        const numbers = inputValue.split(',').map(Number).filter(n => !isNaN(n));
         const sum = numbers.reduce((acc, curr) => acc + curr, 0);
         setResult(sum);
-    };
+    }, []);
 
     return (
         <div className="calculator-container">
@@ -24,7 +24,7 @@ function StringCalculator() {
                 onChange={handleInputChange}
                 placeholder="Enter numbers separated by commas"
             />
-            <button onClick={calculateSum}>Calculate</button>
+            <button onClick={() => add(input)}>Calculate</button>
             {result !== null && <div id="result">Sum: {result}</div>}
         </div>
     );
