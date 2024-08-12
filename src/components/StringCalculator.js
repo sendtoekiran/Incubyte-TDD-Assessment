@@ -9,7 +9,9 @@ function StringCalculator() {
         setInput(e.target.value);
     };
     const add = useCallback((value) => {
-        const inputValue = value.replace(new RegExp("\\\\n", "g"), ",");
+        let inputValue = value.replace(new RegExp("//;\\\\n", "g"), ",");
+        inputValue = inputValue.replace(new RegExp(";", "g"), ",");
+        inputValue = inputValue.replace(new RegExp("\\\\n", "g"), ",");
         const numbers = inputValue.split(',').map(Number).filter(n => !isNaN(n));
         const sum = numbers.reduce((acc, curr) => acc + curr, 0);
         setResult(sum);

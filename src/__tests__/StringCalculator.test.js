@@ -44,3 +44,13 @@ test('handles invalid with \n input gracefully', () => {
     const resultElement = getByText(/Sum: 6/i);
     expect(resultElement).toBeInTheDocument();
 });
+
+test('handles invalid with new line with delimeter input gracefully', () => {
+    const { getByPlaceholderText, getByText } = render(<StringCalculator />);
+    const inputElement = getByPlaceholderText(/Enter numbers separated by commas/i);
+    const buttonElement = getByText(/Calculate/i);
+    fireEvent.change(inputElement, { target: { value: '//;\n1;2' } });
+    fireEvent.click(buttonElement);
+    const resultElement = getByText(/Sum: 3/i);
+    expect(resultElement).toBeInTheDocument();
+});
