@@ -13,8 +13,18 @@ function StringCalculator() {
         inputValue = inputValue.replace(new RegExp(";", "g"), ",");
         inputValue = inputValue.replace(new RegExp("\\\\n", "g"), ",");
         const numbers = inputValue.split(',').map(Number).filter(n => !isNaN(n));
-        const sum = numbers.reduce((acc, curr) => acc + curr, 0);
-        setResult(sum);
+        const negativeNumbers = []
+        const sum = numbers.reduce((acc, curr) => {
+            if (curr < 0) {
+                negativeNumbers.push(curr)
+            };
+            return acc + curr
+        }, 0);
+        if (negativeNumbers.length) {
+            setResult(`negative numbers not allowed  ${negativeNumbers.toString()}`)
+        } else {
+            setResult(sum);
+        }
     }, []);
 
     return (

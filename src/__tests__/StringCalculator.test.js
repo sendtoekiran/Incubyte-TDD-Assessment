@@ -54,3 +54,12 @@ test('handles invalid with new line with delimeter input gracefully', () => {
     const resultElement = getByText(/Sum: 3/i);
     expect(resultElement).toBeInTheDocument();
 });
+test('handles negative numbers', () => {
+    const { getByPlaceholderText, getByText } = render(<StringCalculator />);
+    const inputElement = getByPlaceholderText(/Enter numbers separated by commas/i);
+    const buttonElement = getByText(/Calculate/i);
+    fireEvent.change(inputElement, { target: { value: '1,-1,-4,3' } });
+    fireEvent.click(buttonElement);
+    const resultElement = getByText(/negative numbers not allowed/i);
+    expect(resultElement).toBeInTheDocument();
+});
